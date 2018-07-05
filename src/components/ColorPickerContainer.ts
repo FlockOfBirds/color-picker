@@ -48,6 +48,7 @@ type onChange = "doNothing" | "callMicroflow" | "callNanoflow";
 
 export default class ColorPickerContainer extends Component<ColorPickerContainerProps, ColorPickerContainerState> {
     private subscriptionHandles: number[] = [];
+    private blurTimeoutId?: number;
     private disabled = false;
     private previousColor = "";
     private colorChanged = false;
@@ -89,6 +90,10 @@ export default class ColorPickerContainer extends Component<ColorPickerContainer
 
     componentWillUnmount() {
         this.subscriptionHandles.forEach(window.mx.data.unsubscribe);
+        if (this.blurTimeoutId) {
+            window.clearTimeout(this.blurTimeoutId);
+            this.handleBlur();
+        }
     }
 
     private renderColorPicker(hasLabel = false) {
@@ -103,8 +108,9 @@ export default class ColorPickerContainer extends Component<ColorPickerContainer
             disableAlpha: this.props.format !== "rgba",
             displayColorPicker: this.state.displayColorPicker,
             type: this.props.type,
+            onBlur: this.setBlurTimeout,
+            onFocus: this.handleFocus,
             mode: this.props.mode,
-            close: this.handleClose,
             style: !hasLabel ? ColorPickerContainer.parseStyle(this.props.style) : undefined,
             onChange: this.updateColorValue,
             onChangeComplete: this.handleOnChange
@@ -112,6 +118,25 @@ export default class ColorPickerContainer extends Component<ColorPickerContainer
                 ? this.renderInput()
                 : this.renderButton()
         );
+    }
+
+    private handleBlur = () => {
+        delete this.blurTimeoutId;
+        if (this.state.displayColorPicker) {
+            this.handleClose();
+        }
+    }
+
+    private setBlurTimeout = () => {
+        this.blurTimeoutId = window.setTimeout(this.handleBlur, 0);
+    }
+
+    private handleFocus = () => {
+        if (this.blurTimeoutId) {
+            window.clearTimeout(this.blurTimeoutId);
+            delete this.blurTimeoutId;
+            return;
+        }
     }
 
     private renderButton() {

@@ -16,7 +16,8 @@ export interface ColorPickerProps {
     style?: object;
     displayColorPicker: boolean;
     onChange?: Picker.ColorChangeHandler;
-    close?: () => void;
+    onFocus?: () => void;
+    onBlur?: () => void;
     alertMessage?: string;
     onChangeComplete?: Picker.ColorChangeHandler;
     defaultColors: { color: string }[];
@@ -49,7 +50,9 @@ export class ColorPicker extends Component<ColorPickerProps, {}> {
                 this.props.className,
                 { "widget-color-picker-disabled": this.props.disabled }
             ),
-            style: this.props.style
+            style: this.props.style,
+            onFocus: this.props.onFocus,
+            onBlur: this.props.onBlur
         },
             this.props.children,
             (this.props.displayColorPicker || this.props.mode === "inline")
@@ -66,13 +69,10 @@ export class ColorPicker extends Component<ColorPickerProps, {}> {
 
         return createElement("div", {
             className: classNames({
-                "widget-color-picker-popover" : supportPopover,
+                "widget-color-picker-popover": supportPopover,
                 "widget-color-picker-no-popover": mode !== "inline"
             })
         },
-            mode !== "inline"
-                ? createElement("div", { className: "widget-color-picker-cover", onClick: this.props.close })
-                : null,
             disabled ? createElement("div", { className: "widget-color-picker-overlay" }) : null,
             createElement(this.components[type], {
                 color: this.props.color,
