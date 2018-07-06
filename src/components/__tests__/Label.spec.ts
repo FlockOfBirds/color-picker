@@ -11,7 +11,7 @@ describe("Label", () => {
         const labelComponent = renderLabel({ label, orientation: "horizontal" });
 
         expect(labelComponent).toBeElement(
-            createElement("div", { className: "form-group" },
+            createElement("div", { className: "form-group clearfix" },
                 createElement("label", { className: "control-label col-sm-6" }, label),
                 createElement("div", { className: `col-sm-6` })
             )
@@ -22,7 +22,7 @@ describe("Label", () => {
         const labelComponent = renderLabel({ label, orientation: "vertical" });
 
         expect(labelComponent).toBeElement(
-            createElement("div", { className: "form-group" },
+            createElement("div", { className: "form-group clearfix" },
                 createElement("label", { className: "control-label" }, label),
                 createElement("div", { className: "" })
             )

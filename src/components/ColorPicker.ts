@@ -55,34 +55,41 @@ export class ColorPicker extends Component<ColorPickerProps, {}> {
             onBlur: this.props.onBlur
         },
             this.props.children,
-            (this.props.displayColorPicker || this.props.mode === "inline")
-                ? this.renderPicker()
-                : null,
+            this.props.disabled ? createElement("div", { className: "widget-color-picker-overlay" }) : null,
+            this.props.displayColorPicker
+                ? this.displayColorPicker()
+                : this.props.mode === "inline"
+                    ? this.renderPicker()
+                    : null,
             createElement(Alert, { className: "widget-color-picker-alert" }, this.props.alertMessage)
         );
     }
 
-    private renderPicker() {
-        const { defaultColors, disabled, mode, type } = this.props;
-        const colors = defaultColors.map((color) => color.color);
+    private displayColorPicker() {
+        const { mode, type } = this.props;
         const supportPopover = mode !== "inline" && type !== "hue" && type !== "slider";
 
         return createElement("div", {
-            className: classNames({
-                "widget-color-picker-popover": supportPopover,
-                "widget-color-picker-no-popover": mode !== "inline"
+            className: classNames("widget-color-picker-no-popover", {
+                "widget-color-picker-popover": supportPopover
             })
         },
-            disabled ? createElement("div", { className: "widget-color-picker-overlay" }) : null,
-            createElement(this.components[type], {
-                color: this.props.color,
-                colors: (defaultColors.length > 0 && type !== "swatches") ? colors : undefined,
-                onChange: this.props.onChange,
-                onChangeComplete: this.props.onChangeComplete,
-                presetColors: defaultColors.length > 0 ? colors : undefined,
-                triangle: "hide",
-                disableAlpha: this.props.disableAlpha
-            })
+            this.renderPicker()
         );
+    }
+
+    private renderPicker() {
+        const { defaultColors, type } = this.props;
+        const colors = defaultColors.map((color) => color.color);
+
+        return createElement(this.components[type], {
+            color: this.props.color,
+            colors: (defaultColors.length > 0 && type !== "swatches") ? colors : undefined,
+            onChange: this.props.onChange,
+            onChangeComplete: this.props.onChangeComplete,
+            presetColors: defaultColors.length > 0 ? colors : undefined,
+            triangle: "hide",
+            disableAlpha: this.props.disableAlpha
+        });
     }
 }

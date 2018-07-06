@@ -14,7 +14,7 @@ export const Label: SFC<LabelProps> = ({ children, className, label, style, weig
     const labelWeight = orientation === "horizontal" ? `col-sm-${weight}` : "";
     const childrenWeight = orientation === "horizontal" ? `col-sm-${12 - weight}` : "";
 
-    return createElement("div", { className: classNames("form-group", className), style },
+    return createElement("div", { className: classNames("form-group clearfix", className), style },
         createElement("label", { className: `control-label ${labelWeight}` }, label),
         createElement("div", { className: `${childrenWeight}` }, children)
     );

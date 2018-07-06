@@ -48,8 +48,8 @@ describe("ColorPicker", () => {
 
         expect(colorPickerComponent).toBeElement(
             createElement("div", { className: "widget-color-picker widget-color-picker-disabled" },
+                createElement("div", { className: "widget-color-picker-overlay" }),
                 createElement("div", { className: "widget-color-picker-popover widget-color-picker-no-popover" },
-                    createElement("div", { className: "widget-color-picker-overlay" }),
                     createElement(components[colorPickerProps.type])
                 ),
                 createElement(Alert, { className: "widget-color-picker-alert" })
@@ -65,15 +65,13 @@ describe("ColorPicker", () => {
 
         expect(colorPickerComponent).toBeElement(
             createElement("div", { className: "widget-color-picker" },
-                createElement("div", { className: "" },
-                    createElement(components[colorPickerProps.type], {
-                        color: colorPickerProps.color,
-                        colors: [ "#2CCCE4", "#555555" ],
-                        presetColors: [ "#2CCCE4", "#555555" ],
-                        triangle: "hide",
-                        onChange: jasmine.any(Function) as any
-                    })
-                ),
+                createElement(components[colorPickerProps.type], {
+                    color: colorPickerProps.color,
+                    colors: [ "#2CCCE4", "#555555" ],
+                    presetColors: [ "#2CCCE4", "#555555" ],
+                    triangle: "hide",
+                    onChange: jasmine.any(Function) as any
+                }),
                 createElement(Alert, { className: "widget-color-picker-alert" })
             )
         );
@@ -194,13 +192,11 @@ describe("ColorPicker", () => {
 
             expect(colorPickerComponent).toBeElement(
                 createElement("div", { className: "widget-color-picker" },
-                    createElement("div", { className: "" },
-                        createElement(components[colorPickerProps.type], {
-                            color: colorPickerProps.color,
-                            triangle: "hide",
-                            onChange: jasmine.any(Function) as any
-                        })
-                    ),
+                    createElement(components[colorPickerProps.type], {
+                        color: colorPickerProps.color,
+                        triangle: "hide",
+                        onChange: jasmine.any(Function) as any
+                    }),
                     createElement(Alert, { className: "widget-color-picker-alert" })
                 )
             );

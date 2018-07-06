@@ -140,14 +140,16 @@ export default class ColorPickerContainer extends Component<ColorPickerContainer
     }
 
     private renderButton() {
-        return createElement(Button, {
-            className: this.props.mode === "input" ? "widget-color-picker-input-inner" : "widget-color-picker-inner",
-            disabled: this.disabled,
-            mode: this.props.mode,
-            color: this.state.alertMessage ? this.getValue(this.props.mxObject) : this.state.color,
-            onClick: this.handleClick,
-            tabIndex: this.props.mode === "popover" ? 0 : -1
-        });
+        return this.props.mode !== "inline"
+            ? createElement(Button, {
+                className: this.props.mode === "input" ? "widget-color-picker-input-inner" : "widget-color-picker-inner",
+                disabled: this.disabled,
+                mode: this.props.mode,
+                color: this.state.alertMessage ? this.getValue(this.props.mxObject) : this.state.color,
+                onClick: this.handleClick,
+                tabIndex: this.props.mode === "popover" ? 0 : -1
+            })
+            : null;
     }
 
     private renderInput() {
