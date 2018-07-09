@@ -4,11 +4,7 @@ class ColorFormat {
     }
 
     public get circleColorPickerButton() {
-        return browser.element(".mx-name-colorPicker22  > div > div > span:nth-child(2) > div > span > div");
-    }
-
-    public get circleColorPickerButtonValue() {
-        return browser.element(".mx-name-colorPicker22 .widget-color-picker-inner");
+        return browser.element(".mx-name-colorPicker21 > div > div:nth-child(3) > span:nth-child(1) > div");
     }
 
     public get skethInput() {

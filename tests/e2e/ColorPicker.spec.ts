@@ -9,11 +9,10 @@ describe("Color picker", () => {
         colorFormatPage.circleColorPicker.waitForVisible();
         const initialColorValue = browser.getValue(".mx-name-colorPicker17 input");
         colorFormatPage.circleColorPickerButton.click();
-        colorFormatPage.circleColorPickerButtonValue.waitForValue();
         const newColorValue = browser.getValue(".mx-name-colorPicker17 input");
 
         expect(initialColorValue).toEqual("rgb(42,94,210)");
-        expect(newColorValue).toEqual("rgb(233,30,99)");
+        expect(newColorValue).toEqual("rgb(255,105,0)");
         expect(initialColorValue).not.toEqual(newColorValue);
     });
 
